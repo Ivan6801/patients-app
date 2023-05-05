@@ -1,7 +1,19 @@
 import express from "express";
+import dotenv from "dotenv";
+import conectarDB from "./config/db.js";
+import userRouters from "./routers/userRoutes.js";
 
 const app = express();
 
-app.listen(4000, () => {
-  console.log("Servidor corriendo en el puerto 4000");
+dotenv.config();
+
+conectarDB();
+
+// Routing
+app.use("/api/users", userRouters);
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on the port ${PORT}`);
 });
