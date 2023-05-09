@@ -2,7 +2,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, createContext } from "react";
-import clienteAxios from "../config/clienteAxios";
+import clienteAxios from "../../config/clienteAxios";
 
 const AuthContext = createContext();
 
