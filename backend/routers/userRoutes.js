@@ -1,12 +1,15 @@
 import express from "express";
 const router = express.Router();
+import { register } from "../controllers/userController.js";
 
-router.get("/", (req, res) => {
-  res.send("Desde API/USUARIO");
-});
+import checkAuth from "../middleware/checkAuth.js";
 
-router.post("/", (req, res) => {
-  res.send("POST API/USUARIO");
-});
+// Autenticación, Registro y Confirmación de Usuarios
+router.post("/", register); // Crea un nuevo usuario
+// router.post("/login", autenticar);
+// router.get("/confirmar/:token", confirmar);
+// router.post("/olvide-password", olvidePassword);
+// router.route("/olvide-password/:token").get(comprobarToken).post(nuevoPassword);
+// router.get("/perfil", checkAuth, perfil);
 
 export default router;
