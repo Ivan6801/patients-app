@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-// import generarId from "../helpers/generateId.js";
+import generarId from "../helpers/generateId.js";
 // import generarJWT from "../helpers/generateJWT.JS";
 // import { emailRecord } from "../helpers/email.js";
 
