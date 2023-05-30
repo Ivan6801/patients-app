@@ -4,8 +4,17 @@ import generarId from "../helpers/generateId.js";
 // import { emailRecord } from "../helpers/email.js";
 
 const register = async (req, res) => {
+  const { email } = req.body;
+  const existeUser = await User.findOne({ email });
+
+  if (existeUser) {
+    const error = new Error("User ya registered");
+    return res.status(400).json({ msg: error.message });
+  }
+
   try {
     const user = new User(req.body);
+    user.token = generarId();
     const userStored = await user.save();
     res.json(userStored);
   } catch (error) {
