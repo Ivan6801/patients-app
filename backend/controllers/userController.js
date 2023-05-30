@@ -38,7 +38,12 @@ const authenticate = async (req, res) => {
     const error = new Error("Your account has not been confirmed");
     return res.status(403).json({ msg: error.message });
   }
-  // Comprobar
+  // Comprobar su password
+  if (await user.checkPassword(password)) {
+    console.log("Its right");
+  } else {
+    console.log("It is incorrect");
+  }
 };
 
 export {
