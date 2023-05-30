@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import generarId from "../helpers/generateId.js";
-// import generarJWT from "../helpers/generateJWT.JS";
+import generarJWT from "../helpers/generateJWT.js";
 // import { emailRecord } from "../helpers/email.js";
 
 const register = async (req, res) => {
@@ -44,6 +44,7 @@ const authenticate = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      token: generarJWT(user._id),
     });
   } else {
     const error = new Error("The password it is incorrect");
@@ -51,10 +52,14 @@ const authenticate = async (req, res) => {
   }
 };
 
+const confirm = async (req, res) => {
+  const { token } = req.params;
+};
+
 export {
   register,
   authenticate,
-  // confirmar,
+  confirm,
   // olvidePassword,
   // comprobarToken,
   // nuevoPassword,
