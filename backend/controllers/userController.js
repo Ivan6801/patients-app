@@ -52,10 +52,14 @@ const authenticate = async (req, res) => {
   }
 };
 
+const confirm = async (req, res) => {
+  const { token } = req.params;
+};
+
 export {
   register,
   authenticate,
-  // confirmar,
+  confirm,
   // olvidePassword,
   // comprobarToken,
   // nuevoPassword,
