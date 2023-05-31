@@ -121,6 +121,10 @@ const newPassword = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  console.log("Desde profile...");
+};
+
 export {
   register,
   authenticate,
@@ -128,5 +132,5 @@ export {
   forgotPassword,
   checkToken,
   newPassword,
-  // perfil,
+  profile,
 };
