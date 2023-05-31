@@ -70,11 +70,28 @@ const confirm = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    const error = new Error("The User not exist");
+    return res.status(404).json({ msg: error.message });
+  }
+
+  try {
+    user.token = generarId();
+    await user.save();
+    res.json({ msg: "we have sent an email with the instructions" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   register,
   authenticate,
   confirm,
-  // olvidePassword,
+  forgotPassword,
   // comprobarToken,
   // nuevoPassword,
   // perfil,
