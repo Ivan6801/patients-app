@@ -5,6 +5,7 @@ import {
   authenticate,
   confirm,
   forgotPassword,
+  checkToken,
 } from "../controllers/userController.js";
 
 import checkAuth from "../middleware/checkAuth.js";
@@ -14,7 +15,8 @@ router.post("/", register); // Crea un nuevo usuario
 router.post("/login", authenticate);
 router.get("/confirm/:token", confirm);
 router.post("/forgot-password", forgotPassword);
-// router.route("/olvide-password/:token").get(comprobarToken).post(nuevoPassword);
+router.get("/forgot-password/:token", checkToken);
+// router.route("/forgot-password/:token").get(comprobarToken).post(nuevoPassword);
 // router.get("/perfil", checkAuth, perfil);
 
 export default router;

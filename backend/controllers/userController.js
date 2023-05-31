@@ -87,12 +87,25 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const checkToken = async (req, res) => {
+  const { token } = req.params;
+
+  const tokenValid = await User.findOne({ token });
+
+  if (tokenValid) {
+    res.json({ msg: "Valid token and user exists" })
+  } else {
+    const error = new Error("Token not valid");
+    return res.status(404).json({ msg: error.message });
+  }
+};
+
 export {
   register,
   authenticate,
   confirm,
   forgotPassword,
-  // comprobarToken,
+  checkToken,
   // nuevoPassword,
   // perfil,
 };
