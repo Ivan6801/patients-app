@@ -17,8 +17,6 @@ router.post("/", register); // Crea un nuevo usuario
 router.post("/login", authenticate);
 router.get("/confirm/:token", confirm);
 router.post("/forgot-password", forgotPassword);
-// router.get("/forgot-password/:token", checkToken);
-// router.post("/forgot-password/:token", newPassword);
 router.route("/forgot-password/:token").get(checkToken).post(newPassword);
 router.get("/profile", checkAuth, profile);
 
