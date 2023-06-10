@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
 import userRouters from "./routers/userRoutes.js";
-// import projectRoutes from "./routers/projectRoutes.js";
+import projectRoutes from "./routers/projectRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -32,7 +32,7 @@ conectarDB();
 
 // Routing
 app.use("/api/users", userRouters);
-// app.use("/api/projects", projectRoutes);
+app.use("/api/projects", projectRoutes);
 
 const PORT = process.env.PORT || 4000;
 
