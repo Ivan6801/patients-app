@@ -18,6 +18,7 @@ router.post("/login", authenticate);
 router.get("/confirm/:token", confirm);
 router.post("/forgot-password", forgotPassword);
 router.route("/forgot-password/:token").get(checkToken).post(newPassword);
+
 router.get("/profile", checkAuth, profile);
 
 export default router;

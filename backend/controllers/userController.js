@@ -123,7 +123,6 @@ const newPassword = async (req, res) => {
 
 const profile = async (req, res) => {
   const { user } = req;
-
   res.json(user);
 };
 
