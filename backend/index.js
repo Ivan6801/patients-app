@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
 import userRouters from "./routers/userRoutes.js";
@@ -11,6 +12,13 @@ app.use(express.json());
 dotenv.config();
 
 conectarDB();
+
+// Configurar CORS
+const corsOptions = {
+  origin: "http://127.0.0.1:5173", // Cambia esto a tu URL de frontend permitida
+};
+
+app.use(cors(corsOptions));
 
 // Routing
 app.use("/api/users", userRouters);
