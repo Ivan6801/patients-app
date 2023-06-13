@@ -51,7 +51,14 @@ const getProject = async (req, res) => {
 };
 
 const editProject = async (req, res) => {
-  const { id } = req.params;
+  let { id } = req.params;
+  id = id.trim(); // Eliminar espacios en blanco, incluido el carácter de nueva línea
+  if (id.length !== 24) {
+    // El ID no tiene una longitud válida
+    const error = new Error("Invalid ID");
+    return res.status(400).json({ msg: error.message });
+  }
+
   const project = await Project.findById(id);
 
   if (!project) {
@@ -78,6 +85,14 @@ const editProject = async (req, res) => {
 };
 
 const deleteProject = async (req, res) => {
+  // let { id } = req.params;
+  // id = id.trim(); // Eliminar espacios en blanco, incluido el carácter de nueva línea
+  // if (id.length !== 24) {
+  //   // El ID no tiene una longitud válida
+  //   const error = new Error("Invalid ID");
+  //   return res.status(400).json({ msg: error.message });
+  // }
+
   const { id } = req.params;
 
   const project = await Project.findById(id);
