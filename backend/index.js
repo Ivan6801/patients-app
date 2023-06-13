@@ -15,7 +15,7 @@ conectarDB();
 
 // Configurar CORS
 const corsOptions = {
-  origin: "http://127.0.0.1:5173", // Cambia esto a tu URL de frontend permitida
+  origin: "http://localhost:5173", // Cambia esto a tu URL de frontend permitida
 };
 
 app.use(cors(corsOptions));
