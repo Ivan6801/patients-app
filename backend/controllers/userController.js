@@ -21,7 +21,6 @@ const register = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  res.json({ msg: "Create user" });
 };
 
 const authenticate = async (req, res) => {

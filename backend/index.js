@@ -14,11 +14,23 @@ dotenv.config();
 conectarDB();
 
 // Configurar CORS
+const whitelist = [process.env.FRONTEND_URL];
+
 const corsOptions = {
-  origin: "http://localhost:5173", // Cambia esto a tu URL de frontend permitida
+  origin: function (origin, callback) {
+    console.log(origin);
+    if (!origin || whitelist.includes(origin)) {
+      // Permitir solicitudes sin origen (como API clients)
+      // o solicitudes desde un origen permitido en whitelist
+      callback(null, true);
+    } else {
+      // No está permitido
+      callback(new Error("Error de CORS"));
+    }
+  },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Routing
 app.use("/api/users", userRouters);
