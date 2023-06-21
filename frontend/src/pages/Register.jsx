@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alert";
-// import clienteAxios from "../../config/clienteAxios.js";
+import clienteAxios from "../../config/clienteAxios.js";
 import axios from "axios";
 
 export default function Register() {
@@ -41,14 +41,26 @@ export default function Register() {
 
     // Crear el usuario en la API http://localhost:5173/
     try {
-      const respuesta = await axios.post("http://localhost:4000/api/users/", {
+      // TODO: Mover hacia un cliente Axios
+      const { data } = await clienteAxios.post(`/users/`, {
         name,
         email,
         password,
       });
-      console.log(respuesta);
+
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRepeatPassword("");
     } catch (error) {
-      console.log(error);
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
     }
   };
 

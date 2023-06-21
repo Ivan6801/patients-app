@@ -93,14 +93,14 @@ export default function Login() {
       <nav className="lg:flex lg:justify-between">
         <Link
           className="block text-center my-5 text-slate-500 uppercase text-sm"
-          to="/registrar"
+          to="/register"
         >
           ¿No tienes una cuenta? Regístrate
         </Link>
 
         <Link
           className="block text-center my-5 text-slate-500 uppercase text-sm"
-          to="/olvide-password"
+          to="/forgot-password"
         >
           Olvide Mi Password
         </Link>
