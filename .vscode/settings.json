@@ -1,4 +1,7 @@
 {
   "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontSize": 18
+  "editor.fontSize": 18,
+  "githubPullRequests.ignoredPullRequestBranches": [
+    "me/Ivan"
+  ]
 }
