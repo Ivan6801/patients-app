@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState({});
 
-  // const { setAuth, loading } = useAuth();
+  const { setAuth, loading } = useAuth();
 
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function Login() {
       });
       setAlerta({});
       localStorage.setItem("token", data.token);
-      // setAuth(data);
+      setAuth(data);
       navigate("/projects");
     } catch (error) {
       setAlerta({
@@ -41,6 +41,8 @@ export default function Login() {
   };
 
   const { msg } = alerta;
+
+  if (loading) return "Cargando...";
 
   return (
     <>

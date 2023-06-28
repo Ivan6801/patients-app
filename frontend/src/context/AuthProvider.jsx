@@ -1,11 +1,9 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/prop-types */
 import { useState, useEffect, createContext } from "react";
 import clienteAxios from "../../config/clienteAxios";
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 function AuthProvider({ children }) {
   const [auth, setAuth] = useState({});
   const [loading, setloading] = useState(true);
