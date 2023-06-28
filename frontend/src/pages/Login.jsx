@@ -33,10 +33,11 @@ export default function Login() {
       setAuth(data);
       navigate("/projects");
     } catch (error) {
-      setAlerta({
-        msg: error.response.data.msg,
-        error: true,
-      });
+      console.error(error);
+      // setAlerta({
+      //   msg: error.response.data.msg,
+      //   error: true,
+      // });
     }
   };
 
