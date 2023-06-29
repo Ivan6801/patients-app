@@ -7,27 +7,32 @@ import ForgotPassword from "./pages/ForgotPassword";
 import NewPassword from "./pages/NewPassword";
 import ConfirmAccount from "./pages/ConfirmAccount";
 import { AuthProvider } from "./context/AuthProvider";
+import { ProjectsProvider } from "./context/ProjectsProvider";
 import Projects from "./pages/Projects";
 import RutaProtect from "./layouts/RutaProtect";
+import NewProject from "./pages/NewProject";
 import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="forgot-password" element={<ForgotPassword />} />
-            <Route path="forgot-password/:token" element={<NewPassword />} />
-            <Route path="confirm/:token" element={<ConfirmAccount />} />
-          </Route>
+        <ProjectsProvider>
+          <Routes>
+            <Route path="/" element={<AuthLayout />}>
+              <Route index element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="forgot-password/:token" element={<NewPassword />} />
+              <Route path="confirm/:token" element={<ConfirmAccount />} />
+            </Route>
 
-          <Route path="/projects" element={<RutaProtect />}>
-            <Route index element={<Projects />} />
-          </Route>
-        </Routes>
+            <Route path="/projects" element={<RutaProtect />}>
+              <Route index element={<Projects />} />
+              <Route path="new-project" element={<NewProject />} />
+            </Route>
+          </Routes>
+        </ProjectsProvider>
       </AuthProvider>
     </BrowserRouter>
   );
