@@ -96,13 +96,21 @@ const forgotPassword = async (req, res) => {
 
 const checkToken = async (req, res) => {
   const { token } = req.params;
+  const { password } = req.body;
 
-  const tokenValid = await User.findOne({ token });
+  const user = await User.findOne({ token });
 
-  if (tokenValid) {
-    res.json({ msg: "Valid token and user exists" });
+  if (user) {
+    user.password = password;
+    user.token = "";
+    try {
+      await user.save();
+      res.json({ msg: "Password successfully modified" });
+    } catch (error) {
+      console.log(error);
+    }
   } else {
-    const error = new Error("Token not valid");
+    const error = new Error("Token dot valid");
     return res.status(404).json({ msg: error.message });
   }
 };

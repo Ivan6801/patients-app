@@ -25,7 +25,18 @@ export default function FormProject() {
       return;
     }
     // Pasar los datos hacia el provider
-    submitProject({ name, description, deliverDate, client });
+    await submitProject({
+      id,
+      name,
+      description,
+      deliverDate,
+      client,
+    });
+    setId(null);
+    setName("");
+    setDescription("");
+    setDeliverDate("");
+    setClient("");
   };
 
   const { msg } = alerta;
