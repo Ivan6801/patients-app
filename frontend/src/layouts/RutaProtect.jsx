@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { Header } from "../components/Header";
-import { Sidebar } from "../components/Sidebar";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
 export default function RutaProtect() {
   const { auth, loading } = useAuth();

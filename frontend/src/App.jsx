@@ -8,7 +8,7 @@ import NewPassword from "./pages/NewPassword";
 import ConfirmAccount from "./pages/ConfirmAccount";
 import { AuthProvider } from "./context/AuthProvider";
 import Projects from "./pages/Projects";
-import { RutaProtect } from "./layouts/RutaProtect";
+import RutaProtect from "./layouts/RutaProtect";
 import "./App.css";
 
 function App() {
