@@ -1,23 +1,22 @@
 import express from "express";
-const router = express.Router();
 import {
   register,
-  authenticate,
+  autenticar,
   confirm,
-  forgotPassword,
-  checkToken,
-  newPassword,
+  forgetPassword,
+  buyerToken,
   profile,
 } from "../controllers/userController.js";
-
 import checkAuth from "../middleware/checkAuth.js";
+
+const router = express.Router();
 
 // Autenticación, Registro y Confirmación de Usuarios
 router.post("/", register); // Crea un nuevo usuario
-router.post("/login", authenticate);
+router.post("/login", autenticar);
 router.get("/confirm/:token", confirm);
-router.post("/forget-password", forgotPassword);
-router.route("/forget-password/:token").get(checkToken).post(newPassword);
+router.post("/forget-password", forgetPassword);
+router.route("/forget-password/:token").get(forgetPassword).post(buyerToken);
 
 router.get("/profile", checkAuth, profile);
 

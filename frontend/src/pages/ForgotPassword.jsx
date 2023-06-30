@@ -17,7 +17,7 @@ export default function ForgotPassword() {
       return;
     }
     try {
-      const { data } = await clienteAxios.post(`/users/forgot-password/`, {
+      const { data } = await clienteAxios.post(`/users/forget-password/`, {
         email,
       });
       setAlerta({

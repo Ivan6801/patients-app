@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 const checkAuth = async (req, res, next) => {
   let token;
@@ -13,17 +13,17 @@ const checkAuth = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.id).select(
-        "-password -confirmed -token -createdAt -updatedAt -__v"
+        "-password -confirmado -token -createdAt -updatedAt -__v"
       );
 
       return next();
     } catch (error) {
-      return res.status(404).json({ msg: "Was a error" });
+      return res.status(404).json({ msg: "Hubo un error" });
     }
   }
 
   if (!token) {
-    const error = new Error("Token no valid");
+    const error = new Error("Token no válido");
     return res.status(401).json({ msg: error.message });
   }
 

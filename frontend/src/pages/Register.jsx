@@ -1,73 +1,69 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  Formik,
-  Form,
-  FormikProvider,
-  Field,
-  ErrorMessage,
-  useFormik,
-} from "formik";
-import * as Yup from "yup";
 import Alerta from "../components/Alert";
-import clienteAxios from "../../config/clienteAxios.js";
-import axios from "axios";
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Your Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-  repeatPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Repeat Password is required"),
-});
+import clienteAxios from "../../config/clienteAxios";
 
 export default function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [alerta, setAlerta] = useState({});
 
-  const handleSubmit = async (values) => {
-    // Submit logic here
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    if ([name, email, password, repeatPassword].includes("")) {
+      setAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      return;
+    }
+    if (password !== repeatPassword) {
+      setAlerta({
+        msg: "Los password no son iguales",
+        error: true,
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setAlerta({
+        msg: "El Password es muy corto, agrega minimo 6 caracteres",
+        error: true,
+      });
+      return;
+    }
+
+    setAlerta({});
+
+    // Crear el usuario en la API http://localhost:5173/
     try {
       // TODO: Mover hacia un cliente Axios
       const { data } = await clienteAxios.post(`/users/`, {
-        name: values.name,
-        email: values.email,
-        password: values.password,
+        name,
+        email,
+        password,
       });
 
-      Alerta({
+      setAlerta({
         msg: data.msg,
         error: false,
       });
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRepeatPassword("");
     } catch (error) {
-      Alerta({
+      setAlerta({
         msg: error.response.data.msg,
         error: true,
       });
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      repeatPassword: "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: handleSubmit,
-  });
-
-  const { errors, touched, getFieldProps, values } = formik;
-
   const { msg } = alerta;
-
-  const handleChange = (field, value) => {
-    formik.setFieldValue(field, value);
-  };
 
   return (
     <>
@@ -75,91 +71,80 @@ export default function Register() {
         Sign up and manage your <span className="text-slate-700">projects</span>
       </h1>
       {msg && <Alerta alerta={alerta} />}
-      <FormikProvider value={formik}>
-        <Form
-          noValidate
-          autoComplete="off"
-          className="my-10 bg-white shadow rounded-lg p-10 py-5"
-        >
-          <div className="my-5">
-            <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-              htmlFor="name"
-            >
-              Your Name
-            </label>
-            <Field
-              id="name"
-              type="text"
-              placeholder="Your Name"
-              className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-              {...getFieldProps("name")}
-            />
-            {errors.name && touched.name && (
-              <div className="text-red-500">{errors.name}</div>
-            )}
-          </div>
-          <div className="my-5">
-            <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <Field
-              id="email"
-              type="email"
-              placeholder="Registration email"
-              className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-              {...getFieldProps("email")}
-            />
-            {errors.email && touched.email && (
-              <div className="text-red-500">{errors.email}</div>
-            )}
-          </div>
-          <div className="my-5">
-            <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <Field
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-              {...getFieldProps("password")}
-            />
-            {errors.password && touched.password && (
-              <div className="text-red-500">{errors.password}</div>
-            )}
-          </div>
-          <div className="my-5">
-            <label
-              className="uppercase text-gray-600 block text-xl font-bold"
-              htmlFor="repeatPassword"
-            >
-              Repeat password
-            </label>
-            <Field
-              id="repeatPassword"
-              type="password"
-              placeholder="Repeat password"
-              className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-              {...getFieldProps("repeatPassword")}
-            />
-            {errors.repeatPassword && touched.repeatPassword && (
-              <div className="text-red-500">{errors.repeatPassword}</div>
-            )}
-          </div>
+      <form
+        onSubmit={handleSubmit}
+        className="my-10 bg-white shadow rounded-lg p-10 py-5"
+      >
+        <div className="my-5">
+          <label
+            className="uppercase text-gray-600 block text-xl font-bold"
+            htmlFor="name"
+          >
+            Your Name
+          </label>
           <input
-            type="submit"
-            value="Create Account"
-            className="bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors"
+            id="name"
+            type="text"
+            placeholder="Your Name"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-        </Form>
-      </FormikProvider>
+        </div>
+        <div className="my-5">
+          <label
+            className="uppercase text-gray-600 block text-xl font-bold"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Registration email"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="my-5">
+          <label
+            className="uppercase text-gray-600 block text-xl font-bold"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="my-5">
+          <label
+            className="uppercase text-gray-600 block text-xl font-bold"
+            htmlFor="password2"
+          >
+            Repeat password
+          </label>
+          <input
+            id="password2"
+            type="password"
+            placeholder="Repeat password"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+          />
+        </div>
+        <input
+          type="submit"
+          value="create Account"
+          className="bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors"
+        />
+      </form>
 
       <nav className="lg:flex lg:justify-between">
         <Link
@@ -170,7 +155,7 @@ export default function Register() {
         </Link>
         <Link
           className="block text-center my-5 text-slate-500 uppercase text-sm"
-          to="/forgot-password"
+          to="/forget-password"
         >
           Forgot my password
         </Link>

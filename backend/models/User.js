@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
+mongoose.set('strictQuery', true);
+
 const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     email: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
       unique: true,
     },
@@ -35,12 +37,12 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  const jumped = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, jumped);
 });
 
-userSchema.methods.checkPassword = async function (passwordForm) {
-  return await bcrypt.compare(passwordForm, this.password);
+userSchema.methods.buyerPassword = async function (passwordFormulario) {
+  return await bcrypt.compare(passwordFormulario, this.password);
 };
 
 const User = mongoose.model("User", userSchema);

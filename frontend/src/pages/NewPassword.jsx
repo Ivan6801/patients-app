@@ -16,7 +16,7 @@ export default function NewPassword() {
     const buyerToken = async () => {
       try {
         // TODO: Mover hacia un cliente axios
-        await clienteAxios.get(`/users/forgot-password/${token}`);
+        await clienteAxios.get(`/users/forget-password/${token}`);
         setTokenValido(true);
       } catch (error) {
         setAlerta({
@@ -40,7 +40,7 @@ export default function NewPassword() {
     }
 
     try {
-      const url = `/users/forgot-password/${token}`;
+      const url = `/users/forget-password/${token}`;
 
       const { data } = await clienteAxios.post(url, { password });
       setAlerta({

@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import conectarDB from "./config/db.js";
-import userRouters from "./routers/userRoutes.js";
-import projectRoutes from "./routers/projectRoutes.js";
-import taskRoutes from "./routers/taskRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -18,22 +18,20 @@ const whitelist = [process.env.FRONTEND_URL];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log(origin);
-    if (!origin || whitelist.includes(origin)) {
-      // Permitir solicitudes sin origen (como API clients)
-      // o solicitudes desde un origen permitido en whitelist
+    if (whitelist.includes(origin)) {
+      // Puede consultar la API
       callback(null, true);
     } else {
-      // No está permitido
-      callback(new Error("Error de CORS"));
+      // No esta permitido
+      callback(new Error("Error de Cors"));
     }
   },
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Routing
-app.use("/api/users", userRouters);
+app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 

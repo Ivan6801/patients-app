@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 
 const conectarDB = async () => {
   try {
@@ -17,4 +17,3 @@ const conectarDB = async () => {
 };
 
 export default conectarDB;
-
